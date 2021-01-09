@@ -1,28 +1,52 @@
 import random
+
+
 class Computer:
     def __init__(self):
-        self.get_choice = self.get_choice()
-    def get_choice(self):
-        human = Human
-        human_choice = human.set_choice(human)
+        pass
+
+    def rules(self):
         rules = {
             'scissors': 'rock',
             'rock': 'paper',
             'paper': 'scissors'
         }
-        computer_choice = random.choice(list(rules.keys()))
-        if human_choice in rules.keys():
-            if human_choice == computer_choice:
-                print(f"There is a draw ({computer_choice})")
-            elif rules[human_choice] == computer_choice:
-                print(f"Sorry, but the computer chose {computer_choice}")
-            else:
-                print(f"Well done. The computer chose {computer_choice} and failed")
-class Human:
+        return rules
+
+    def get_choice(self):
+        rules = self.rules()
+        self.computer_choice = random.choice(list(rules.keys()))
+        return self.computer_choice
+
+class Game:
     def __init__(self):
-        pass
-    def set_choice(self):
-        self.set_choice = input().lower()
-        return self.set_choice
+        self.game = self.game()
+
+    def game(self):
+        human_choice = input().lower()
+        computer = Computer()
+        rules = computer.rules()
+        computer_choice = computer.get_choice()
+        while human_choice != "!exit":
+            if human_choice not in rules.keys():
+                print("Invalid input")
+                human_choice = input().lower()
+            else:
+                if human_choice == computer_choice:
+                    print(f"There is a draw ({computer_choice})")
+                    computer_choice = computer.get_choice()
+                    human_choice = input().lower()
+                elif rules[human_choice] == computer_choice:
+                    print(f"Sorry, but the computer chose {computer_choice}")
+                    computer_choice = computer.get_choice()
+                    human_choice = input().lower()
+                else:
+                    print(f"Well done. The computer chose {computer_choice} and failed")
+                    computer_choice = computer.get_choice()
+                    human_choice = input().lower()
+        else:
+            print("Bye!")
+
+
 if __name__ == '__main__':
-    cumputer = Computer()
+    game = Game()
